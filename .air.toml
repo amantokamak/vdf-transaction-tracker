@@ -1,0 +1,16 @@
+# .air.toml
+
+# Define the directories to watch for changes.
+[build]
+watch = [
+    "./cmd",
+    "./pkg"
+]
+include_ext = ["go"]
+exclude_dir = ["tmp", "vendor"]
+cmd = "go build -o ./tmp/main ./main.go"
+
+# Define the entry point of your application.
+[run]
+command = "go"
+args = ["run", "main.go"]

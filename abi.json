@@ -1,0 +1,1025 @@
+[{
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": [{
+        "type": "uint256",
+        "name": "disputePeriod",
+        "internalType": "uint256"
+    }, {
+        "type": "uint256",
+        "name": "minimumDepositAmount",
+        "internalType": "uint256"
+    }, {
+        "type": "uint256",
+        "name": "avgL2GasUsed",
+        "internalType": "uint256"
+    }, {
+        "type": "uint256",
+        "name": "avgL1GasUsed",
+        "internalType": "uint256"
+    }, {
+        "type": "uint256",
+        "name": "premiumPercentage",
+        "internalType": "uint256"
+    }, {
+        "type": "uint256",
+        "name": "penaltyPercentage",
+        "internalType": "uint256"
+    }, {
+        "type": "uint256",
+        "name": "flatFee",
+        "internalType": "uint256"
+    }]
+}, {
+    "type": "error",
+    "name": "AlreadyCommitted",
+    "inputs": []
+}, {
+    "type": "error",
+    "name": "AlreadyLeader",
+    "inputs": []
+}, {
+    "type": "error",
+    "name": "AlreadySucceeded",
+    "inputs": []
+}, {
+    "type": "error",
+    "name": "AlreadyVerified",
+    "inputs": []
+}, {
+    "type": "error",
+    "name": "BigNumbers__ShouldNotBeZero",
+    "inputs": []
+}, {
+    "type": "error",
+    "name": "CRRNGCoordinator_NotOperator",
+    "inputs": []
+}, {
+    "type": "error",
+    "name": "CommitNotStarted",
+    "inputs": []
+}, {
+    "type": "error",
+    "name": "CommitPhaseEnded",
+    "inputs": []
+}, {
+    "type": "error",
+    "name": "CommittedSameValue",
+    "inputs": []
+}, {
+    "type": "error",
+    "name": "DisputePeriodEnded",
+    "inputs": []
+}, {
+    "type": "error",
+    "name": "DisputePeriodNotEnded",
+    "inputs": []
+}, {
+    "type": "error",
+    "name": "DisputePeriodNotEndedOrStarted",
+    "inputs": []
+}, {
+    "type": "error",
+    "name": "FunctionInvalidAtThisStage",
+    "inputs": []
+}, {
+    "type": "error",
+    "name": "InsufficientAmount",
+    "inputs": []
+}, {
+    "type": "error",
+    "name": "InsufficientCommitsCount",
+    "inputs": []
+}, {
+    "type": "error",
+    "name": "InsufficientDepositAmount",
+    "inputs": []
+}, {
+    "type": "error",
+    "name": "InvalidProofLength",
+    "inputs": []
+}, {
+    "type": "error",
+    "name": "NotCommittedParticipant",
+    "inputs": []
+}, {
+    "type": "error",
+    "name": "NotConsumer",
+    "inputs": []
+}, {
+    "type": "error",
+    "name": "NotEnoughOperators",
+    "inputs": []
+}, {
+    "type": "error",
+    "name": "NotFulfilledExecuted",
+    "inputs": []
+}, {
+    "type": "error",
+    "name": "NotLeader",
+    "inputs": []
+}, {
+    "type": "error",
+    "name": "NotStartedRound",
+    "inputs": []
+}, {
+    "type": "error",
+    "name": "NotVerified",
+    "inputs": []
+}, {
+    "type": "error",
+    "name": "NotVerifiedAtTOne",
+    "inputs": []
+}, {
+    "type": "error",
+    "name": "OmegaAlreadyCompleted",
+    "inputs": []
+}, {
+    "type": "error",
+    "name": "OmegaNotCompleted",
+    "inputs": []
+}, {
+    "type": "error",
+    "name": "OwnableInvalidOwner",
+    "inputs": [{
+        "type": "address",
+        "name": "owner",
+        "internalType": "address"
+    }]
+}, {
+    "type": "error",
+    "name": "OwnableUnauthorizedAccount",
+    "inputs": [{
+        "type": "address",
+        "name": "account",
+        "internalType": "address"
+    }]
+}, {
+    "type": "error",
+    "name": "PreviousRoundNotRecovered",
+    "inputs": []
+}, {
+    "type": "error",
+    "name": "RecovNotMatchX",
+    "inputs": []
+}, {
+    "type": "error",
+    "name": "ReentrancyGuardReentrantCall",
+    "inputs": []
+}, {
+    "type": "error",
+    "name": "SendFailed",
+    "inputs": []
+}, {
+    "type": "error",
+    "name": "ShouldNotBeZero",
+    "inputs": []
+}, {
+    "type": "error",
+    "name": "StillInCommitPhase",
+    "inputs": []
+}, {
+    "type": "error",
+    "name": "SubmittedSameOmega",
+    "inputs": []
+}, {
+    "type": "error",
+    "name": "TooEarlyToRefund",
+    "inputs": []
+}, {
+    "type": "error",
+    "name": "TwoOrMoreCommittedPleaseRecover",
+    "inputs": []
+}, {
+    "type": "event",
+    "name": "CommitC",
+    "inputs": [{
+        "type": "uint256",
+        "name": "round",
+        "internalType": "uint256",
+        "indexed": false
+    }, {
+        "type": "uint256",
+        "name": "commitIndex",
+        "internalType": "uint256",
+        "indexed": false
+    }, {
+        "type": "address",
+        "name": "committer",
+        "internalType": "address",
+        "indexed": false
+    }, {
+        "type": "bytes",
+        "name": "commitVal",
+        "internalType": "bytes",
+        "indexed": false
+    }],
+    "anonymous": false
+}, {
+    "type": "event",
+    "name": "FulfillRandomness",
+    "inputs": [{
+        "type": "uint256",
+        "name": "round",
+        "internalType": "uint256",
+        "indexed": false
+    }, {
+        "type": "bool",
+        "name": "success",
+        "internalType": "bool",
+        "indexed": false
+    }, {
+        "type": "address",
+        "name": "fulfiller",
+        "internalType": "address",
+        "indexed": false
+    }],
+    "anonymous": false
+}, {
+    "type": "event",
+    "name": "OperatorNumberChanged",
+    "inputs": [{
+        "type": "uint256",
+        "name": "operatorCount",
+        "internalType": "uint256",
+        "indexed": false
+    }, {
+        "type": "address",
+        "name": "operator",
+        "internalType": "address",
+        "indexed": false
+    }, {
+        "type": "bool",
+        "name": "isOperator",
+        "internalType": "bool",
+        "indexed": false
+    }],
+    "anonymous": false
+}, {
+    "type": "event",
+    "name": "OwnershipTransferred",
+    "inputs": [{
+        "type": "address",
+        "name": "previousOwner",
+        "internalType": "address",
+        "indexed": true
+    }, {
+        "type": "address",
+        "name": "newOwner",
+        "internalType": "address",
+        "indexed": true
+    }],
+    "anonymous": false
+}, {
+    "type": "event",
+    "name": "RandomWordsRequested",
+    "inputs": [{
+        "type": "uint256",
+        "name": "round",
+        "internalType": "uint256",
+        "indexed": false
+    }],
+    "anonymous": false
+}, {
+    "type": "event",
+    "name": "Recovered",
+    "inputs": [{
+        "type": "uint256",
+        "name": "round",
+        "internalType": "uint256",
+        "indexed": false
+    }, {
+        "type": "address",
+        "name": "recoverer",
+        "internalType": "address",
+        "indexed": false
+    }, {
+        "type": "bytes",
+        "name": "omega",
+        "internalType": "bytes",
+        "indexed": false
+    }],
+    "anonymous": false
+}, {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{
+        "type": "uint256",
+        "name": "",
+        "internalType": "uint256"
+    }],
+    "name": "calculateDirectFundingPrice",
+    "inputs": [{
+        "type": "uint32",
+        "name": "_callbackGasLimit",
+        "internalType": "uint32"
+    }]
+}, {
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "outputs": [],
+    "name": "commit",
+    "inputs": [{
+        "type": "uint256",
+        "name": "round",
+        "internalType": "uint256"
+    }, {
+        "type": "tuple",
+        "name": "c",
+        "internalType": "struct BigNumber",
+        "components": [{
+            "type": "bytes",
+            "name": "val",
+            "internalType": "bytes"
+        }, {
+            "type": "uint256",
+            "name": "bitlen",
+            "internalType": "uint256"
+        }]
+    }]
+}, {
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "outputs": [],
+    "name": "disputeLeadershipAtRound",
+    "inputs": [{
+        "type": "uint256",
+        "name": "round",
+        "internalType": "uint256"
+    }]
+}, {
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "outputs": [],
+    "name": "disputeRecover",
+    "inputs": [{
+        "type": "uint256",
+        "name": "round",
+        "internalType": "uint256"
+    }, {
+        "type": "tuple[]",
+        "name": "v",
+        "internalType": "struct BigNumber[]",
+        "components": [{
+            "type": "bytes",
+            "name": "val",
+            "internalType": "bytes"
+        }, {
+            "type": "uint256",
+            "name": "bitlen",
+            "internalType": "uint256"
+        }]
+    }, {
+        "type": "tuple",
+        "name": "x",
+        "internalType": "struct BigNumber",
+        "components": [{
+            "type": "bytes",
+            "name": "val",
+            "internalType": "bytes"
+        }, {
+            "type": "uint256",
+            "name": "bitlen",
+            "internalType": "uint256"
+        }]
+    }, {
+        "type": "tuple",
+        "name": "y",
+        "internalType": "struct BigNumber",
+        "components": [{
+            "type": "bytes",
+            "name": "val",
+            "internalType": "bytes"
+        }, {
+            "type": "uint256",
+            "name": "bitlen",
+            "internalType": "uint256"
+        }]
+    }]
+}, {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{
+        "type": "uint256",
+        "name": "",
+        "internalType": "uint256"
+    }],
+    "name": "estimateDirectFundingPrice",
+    "inputs": [{
+        "type": "uint32",
+        "name": "_callbackGasLimit",
+        "internalType": "uint32"
+    }, {
+        "type": "uint256",
+        "name": "gasPrice",
+        "internalType": "uint256"
+    }]
+}, {
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "outputs": [],
+    "name": "fulfillRandomness",
+    "inputs": [{
+        "type": "uint256",
+        "name": "round",
+        "internalType": "uint256"
+    }]
+}, {
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "outputs": [],
+    "name": "fulfillRandomnessOfFailed",
+    "inputs": [{
+        "type": "uint256",
+        "name": "round",
+        "internalType": "uint256"
+    }]
+}, {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{
+        "type": "uint256",
+        "name": "",
+        "internalType": "uint256"
+    }],
+    "name": "getCommitCountAtRound",
+    "inputs": [{
+        "type": "uint256",
+        "name": "round",
+        "internalType": "uint256"
+    }]
+}, {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{
+        "type": "tuple[]",
+        "name": "",
+        "internalType": "struct BigNumber[]",
+        "components": [{
+            "type": "bytes",
+            "name": "val",
+            "internalType": "bytes"
+        }, {
+            "type": "uint256",
+            "name": "bitlen",
+            "internalType": "uint256"
+        }]
+    }],
+    "name": "getCommitValuesAtRound",
+    "inputs": [{
+        "type": "uint256",
+        "name": "round",
+        "internalType": "uint256"
+    }]
+}, {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{
+        "type": "address[]",
+        "name": "",
+        "internalType": "address[]"
+    }],
+    "name": "getCommittedOperatorsAtRound",
+    "inputs": [{
+        "type": "uint256",
+        "name": "round",
+        "internalType": "uint256"
+    }]
+}, {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{
+        "type": "address",
+        "name": "",
+        "internalType": "address"
+    }],
+    "name": "getConsumerAtRound",
+    "inputs": [{
+        "type": "uint256",
+        "name": "round",
+        "internalType": "uint256"
+    }]
+}, {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{
+        "type": "uint256",
+        "name": "",
+        "internalType": "uint256"
+    }],
+    "name": "getCostAtRound",
+    "inputs": [{
+        "type": "uint256",
+        "name": "round",
+        "internalType": "uint256"
+    }]
+}, {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{
+        "type": "uint256",
+        "name": "",
+        "internalType": "uint256"
+    }],
+    "name": "getDepositAmount",
+    "inputs": [{
+        "type": "address",
+        "name": "operator",
+        "internalType": "address"
+    }]
+}, {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{
+        "type": "uint256",
+        "name": "",
+        "internalType": "uint256"
+    }, {
+        "type": "address",
+        "name": "",
+        "internalType": "address"
+    }],
+    "name": "getDisputeEndTimeAndLeaderAtRound",
+    "inputs": [{
+        "type": "uint256",
+        "name": "round",
+        "internalType": "uint256"
+    }]
+}, {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{
+        "type": "uint256",
+        "name": "",
+        "internalType": "uint256"
+    }],
+    "name": "getDisputeEndTimeOfOperator",
+    "inputs": [{
+        "type": "address",
+        "name": "operator",
+        "internalType": "address"
+    }]
+}, {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{
+        "type": "uint256",
+        "name": "",
+        "internalType": "uint256"
+    }],
+    "name": "getDisputePeriod",
+    "inputs": []
+}, {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{
+        "type": "uint256",
+        "name": "",
+        "internalType": "uint256"
+    }, {
+        "type": "uint256",
+        "name": "",
+        "internalType": "uint256"
+    }, {
+        "type": "uint256",
+        "name": "",
+        "internalType": "uint256"
+    }, {
+        "type": "uint256",
+        "name": "",
+        "internalType": "uint256"
+    }, {
+        "type": "uint256",
+        "name": "",
+        "internalType": "uint256"
+    }],
+    "name": "getFeeSettings",
+    "inputs": []
+}, {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{
+        "type": "tuple",
+        "name": "",
+        "internalType": "struct VDFCRRNGPoFForTitan.FulfillStatus",
+        "components": [{
+            "type": "bool",
+            "name": "executed",
+            "internalType": "bool"
+        }, {
+            "type": "bool",
+            "name": "succeeded",
+            "internalType": "bool"
+        }]
+    }],
+    "name": "getFulfillStatusAtRound",
+    "inputs": [{
+        "type": "uint256",
+        "name": "round",
+        "internalType": "uint256"
+    }]
+}, {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{
+        "type": "uint256",
+        "name": "",
+        "internalType": "uint256"
+    }],
+    "name": "getMinimumDepositAmount",
+    "inputs": []
+}, {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{
+        "type": "uint256",
+        "name": "",
+        "internalType": "uint256"
+    }],
+    "name": "getNextRound",
+    "inputs": []
+}, {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{
+        "type": "tuple",
+        "name": "",
+        "internalType": "struct BigNumber",
+        "components": [{
+            "type": "bytes",
+            "name": "val",
+            "internalType": "bytes"
+        }, {
+            "type": "uint256",
+            "name": "bitlen",
+            "internalType": "uint256"
+        }]
+    }],
+    "name": "getOneCommitValueAtRound",
+    "inputs": [{
+        "type": "uint256",
+        "name": "round",
+        "internalType": "uint256"
+    }, {
+        "type": "uint256",
+        "name": "index",
+        "internalType": "uint256"
+    }]
+}, {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{
+        "type": "address",
+        "name": "",
+        "internalType": "address"
+    }],
+    "name": "getOneCommittedOperatorAtRound",
+    "inputs": [{
+        "type": "uint256",
+        "name": "round",
+        "internalType": "uint256"
+    }, {
+        "type": "uint256",
+        "name": "index",
+        "internalType": "uint256"
+    }]
+}, {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{
+        "type": "uint256",
+        "name": "",
+        "internalType": "uint256"
+    }],
+    "name": "getOperatorCount",
+    "inputs": []
+}, {
+    "type": "function",
+    "stateMutability": "pure",
+    "outputs": [{
+        "type": "uint256",
+        "name": "",
+        "internalType": "uint256"
+    }, {
+        "type": "uint256",
+        "name": "",
+        "internalType": "uint256"
+    }, {
+        "type": "uint256",
+        "name": "",
+        "internalType": "uint256"
+    }, {
+        "type": "uint256",
+        "name": "",
+        "internalType": "uint256"
+    }, {
+        "type": "bytes",
+        "name": "",
+        "internalType": "bytes"
+    }, {
+        "type": "bytes",
+        "name": "",
+        "internalType": "bytes"
+    }, {
+        "type": "bytes",
+        "name": "",
+        "internalType": "bytes"
+    }],
+    "name": "getSetUpValues",
+    "inputs": []
+}, {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{
+        "type": "tuple",
+        "name": "",
+        "internalType": "struct VDFCRRNGPoFForTitan.OperatorStatusAtRound",
+        "components": [{
+            "type": "uint256",
+            "name": "maxCommitTimestamp",
+            "internalType": "uint256"
+        }, {
+            "type": "uint256",
+            "name": "commitIndex",
+            "internalType": "uint256"
+        }, {
+            "type": "bool",
+            "name": "committed",
+            "internalType": "bool"
+        }]
+    }],
+    "name": "getUserStatusAtRound",
+    "inputs": [{
+        "type": "address",
+        "name": "_operator",
+        "internalType": "address"
+    }, {
+        "type": "uint256",
+        "name": "_round",
+        "internalType": "uint256"
+    }]
+}, {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{
+        "type": "uint256",
+        "name": "",
+        "internalType": "uint256"
+    }],
+    "name": "getValidCommitCountAtRound",
+    "inputs": [{
+        "type": "uint256",
+        "name": "round",
+        "internalType": "uint256"
+    }]
+}, {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{
+        "type": "tuple",
+        "name": "",
+        "internalType": "struct VDFCRRNGPoFForTitan.ValueAtRound",
+        "components": [{
+            "type": "uint256",
+            "name": "requestedTime",
+            "internalType": "uint256"
+        }, {
+            "type": "uint256",
+            "name": "commitEndTime",
+            "internalType": "uint256"
+        }, {
+            "type": "address",
+            "name": "consumer",
+            "internalType": "address"
+        }, {
+            "type": "tuple",
+            "name": "omega",
+            "internalType": "struct BigNumber",
+            "components": [{
+                "type": "bytes",
+                "name": "val",
+                "internalType": "bytes"
+            }, {
+                "type": "uint256",
+                "name": "bitlen",
+                "internalType": "uint256"
+            }]
+        }, {
+            "type": "bool",
+            "name": "isRecovered",
+            "internalType": "bool"
+        }, {
+            "type": "bool",
+            "name": "isVerified",
+            "internalType": "bool"
+        }]
+    }],
+    "name": "getValuesAtRound",
+    "inputs": [{
+        "type": "uint256",
+        "name": "_round",
+        "internalType": "uint256"
+    }]
+}, {
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "outputs": [],
+    "name": "initialize",
+    "inputs": [{
+        "type": "tuple[]",
+        "name": "v",
+        "internalType": "struct BigNumber[]",
+        "components": [{
+            "type": "bytes",
+            "name": "val",
+            "internalType": "bytes"
+        }, {
+            "type": "uint256",
+            "name": "bitlen",
+            "internalType": "uint256"
+        }]
+    }, {
+        "type": "tuple",
+        "name": "x",
+        "internalType": "struct BigNumber",
+        "components": [{
+            "type": "bytes",
+            "name": "val",
+            "internalType": "bytes"
+        }, {
+            "type": "uint256",
+            "name": "bitlen",
+            "internalType": "uint256"
+        }]
+    }, {
+        "type": "tuple",
+        "name": "y",
+        "internalType": "struct BigNumber",
+        "components": [{
+            "type": "bytes",
+            "name": "val",
+            "internalType": "bytes"
+        }, {
+            "type": "uint256",
+            "name": "bitlen",
+            "internalType": "uint256"
+        }]
+    }]
+}, {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{
+        "type": "bool",
+        "name": "",
+        "internalType": "bool"
+    }],
+    "name": "isInitialized",
+    "inputs": []
+}, {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{
+        "type": "bool",
+        "name": "",
+        "internalType": "bool"
+    }],
+    "name": "isOperator",
+    "inputs": [{
+        "type": "address",
+        "name": "operator",
+        "internalType": "address"
+    }]
+}, {
+    "type": "function",
+    "stateMutability": "payable",
+    "outputs": [],
+    "name": "operatorDeposit",
+    "inputs": []
+}, {
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "outputs": [],
+    "name": "operatorWithdraw",
+    "inputs": [{
+        "type": "uint256",
+        "name": "amount",
+        "internalType": "uint256"
+    }]
+}, {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{
+        "type": "address",
+        "name": "",
+        "internalType": "address"
+    }],
+    "name": "owner",
+    "inputs": []
+}, {
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "outputs": [],
+    "name": "reRequestRandomWordAtRound",
+    "inputs": [{
+        "type": "uint256",
+        "name": "round",
+        "internalType": "uint256"
+    }]
+}, {
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "outputs": [],
+    "name": "recover",
+    "inputs": [{
+        "type": "uint256",
+        "name": "round",
+        "internalType": "uint256"
+    }, {
+        "type": "tuple",
+        "name": "y",
+        "internalType": "struct BigNumber",
+        "components": [{
+            "type": "bytes",
+            "name": "val",
+            "internalType": "bytes"
+        }, {
+            "type": "uint256",
+            "name": "bitlen",
+            "internalType": "uint256"
+        }]
+    }]
+}, {
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "outputs": [],
+    "name": "refundAtRound",
+    "inputs": [{
+        "type": "uint256",
+        "name": "round",
+        "internalType": "uint256"
+    }]
+}, {
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "outputs": [],
+    "name": "renounceOwnership",
+    "inputs": []
+}, {
+    "type": "function",
+    "stateMutability": "payable",
+    "outputs": [{
+        "type": "uint256",
+        "name": "round",
+        "internalType": "uint256"
+    }],
+    "name": "requestRandomWordDirectFunding",
+    "inputs": [{
+        "type": "uint32",
+        "name": "callbackGasLimit",
+        "internalType": "uint32"
+    }]
+}, {
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "outputs": [],
+    "name": "setSettingVariables",
+    "inputs": [{
+        "type": "uint256",
+        "name": "disputePeriod",
+        "internalType": "uint256"
+    }, {
+        "type": "uint256",
+        "name": "minimumDepositAmount",
+        "internalType": "uint256"
+    }, {
+        "type": "uint256",
+        "name": "avgL2GasUsed",
+        "internalType": "uint256"
+    }, {
+        "type": "uint256",
+        "name": "avgL1GasUsed",
+        "internalType": "uint256"
+    }, {
+        "type": "uint256",
+        "name": "premiumPercentage",
+        "internalType": "uint256"
+    }, {
+        "type": "uint256",
+        "name": "penaltyPercentage",
+        "internalType": "uint256"
+    }, {
+        "type": "uint256",
+        "name": "flatFee",
+        "internalType": "uint256"
+    }]
+}, {
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "outputs": [],
+    "name": "transferOwnership",
+    "inputs": [{
+        "type": "address",
+        "name": "newOwner",
+        "internalType": "address"
+    }]
+}]

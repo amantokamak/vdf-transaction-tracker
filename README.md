@@ -1,1 +1,4 @@
-# vdf-transaction-tracker
+# vdf-tracker-service
+
+# Run
+go run main.go
